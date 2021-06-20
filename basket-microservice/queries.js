@@ -1,5 +1,5 @@
 const client = require('./redis')
-
+const { v4: uuidv4 } = require('uuid');
 
 
 const getBasket = (req, res) => {
@@ -11,9 +11,10 @@ const getBasket = (req, res) => {
 }
 
 const createBasket = (req, res) => {
-    console.log(req.body.id + " " + req.body.basket)
-    client.SET(req.body.id, JSON.stringify(req.body.basket))
-    res.status(200).json(req.body.id)
+    const id = uuidv4();
+    console.log(id + " " + req.body.basket)
+    client.SET(id, JSON.stringify(req.body))
+    res.status(200).json(id)
 }
 
 module.exports = {
