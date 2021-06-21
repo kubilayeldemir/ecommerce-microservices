@@ -12,6 +12,10 @@ app.get('/api/basket/:id', db.getBasket)
 
 app.post('/api/basket', db.createBasket)
 
+app.post('/api/basket/:id', db.addToBasket)
+
+app.post('/api/reset/:password', db.resetRedis)
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
