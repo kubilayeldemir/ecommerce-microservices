@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/products")
@@ -33,6 +30,7 @@ public class ProductController {
 
     @PostMapping
     public List<Product> insertProduct(@RequestBody List<ProductCreateDTO> productCreateDTOList){
+        System.out.println("Post list Products Size:"+productCreateDTOList.size()+"-----"+ System.currentTimeMillis() );
         return productService.saveProducts(ProductMapper.getProductDTOList(productCreateDTOList));
     }
     @GetMapping
