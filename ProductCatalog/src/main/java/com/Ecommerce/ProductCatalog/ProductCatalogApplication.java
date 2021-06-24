@@ -12,7 +12,6 @@ import java.util.Properties;
 public class ProductCatalogApplication {
 
 	public static void main(String[] args) {
-		//System.out.println(System.getenv("selam"));
 		SpringApplication.run(ProductCatalogApplication.class, args);
 	}
 
