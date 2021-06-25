@@ -14,6 +14,8 @@ app.post('/api/basket', db.createBasket)
 
 app.post('/api/basket/:id', db.addToBasket)
 
+app.delete('/api/basket/:id', db.deleteBasket)
+
 app.post('/api/reset/:password', db.resetRedis)
 
 
