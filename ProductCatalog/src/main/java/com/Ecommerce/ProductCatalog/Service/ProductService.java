@@ -69,4 +69,7 @@ public class ProductService {
         }
         return productOptional.get();
     }
+    public List<Product> getProductsByListOfIds(List<String> productIdList){
+        return productRepository.findByIdIn(productIdList);
+    }
 }

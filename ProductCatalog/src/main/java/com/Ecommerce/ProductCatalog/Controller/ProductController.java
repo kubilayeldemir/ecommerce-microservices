@@ -51,5 +51,9 @@ public class ProductController {
     public Product getProductById(@PathVariable String productId){
         return  productService.getProductById(productId);
     }
+    @GetMapping("/list/{productIds}")
+    public List<Product> getProducstByIds(@PathVariable List<String> productIds){
+        return  productService.getProductsByListOfIds(productIds);
+    }
 
 }
