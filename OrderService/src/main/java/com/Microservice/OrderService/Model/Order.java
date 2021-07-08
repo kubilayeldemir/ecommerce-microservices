@@ -13,6 +13,10 @@ public class Order {
     @Column(name = "OrderId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Product> productList;
+
+    @ManyToOne
+    private User owner;
 }
