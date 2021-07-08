@@ -15,10 +15,24 @@ namespace DataAccess.Repositories
             this._client = client;
             this._client.SetBaseAddress("http://localhost:3000/api/");
         }
-        public async Task<List<Product>> getBasket(string basketId)
+
+        public async Task<List<Product>> GetBasket(string basketId)
         {
             string endpoint = "basket/" + basketId;
             return await _client.GetAsync<List<Product>>(endpoint);
+        }
+
+        public async Task<List<Product>> AddToBasket(String basketId, List<Product> products)
+        {
+            string endpoint = "basket/" + basketId;
+            //return await _client.GetAsync<List<Product>>(endpoint);
+            return null;
+        }
+
+        public async Task<String> CreateBasket(List<Product> products)
+        {
+            string endpoint = "basket";
+            return await _client.PostAsync<String>(endpoint,products);
         }
     }
 }

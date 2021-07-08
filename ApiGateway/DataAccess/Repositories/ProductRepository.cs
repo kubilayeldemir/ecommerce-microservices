@@ -34,5 +34,14 @@ namespace DataAccess.Repositories
 
             return await _client.GetAsync<PagedProducts>(endpoint);
         }
+        public async Task<List<Product>> GetProductsByIdList(List<String> productIds)
+        {
+            string endpoint = "/api/products/list/";
+            foreach(var id in productIds)
+            {
+                endpoint += id + ',';
+            }
+            return await _client.GetAsync<List<Product>>(endpoint);
+        }
     }
 }

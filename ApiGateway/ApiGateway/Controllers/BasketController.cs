@@ -1,5 +1,6 @@
 ﻿using DataAccess.Interfaces;
 using DataAccess.Models;
+using DataAccess.Models.Basket;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,7 +18,7 @@ namespace ApiGateway.Controllers
         private readonly IBasketRepository basketRepository;
 
 
-        public BasketController(IProductRepository productRepository,IBasketRepository basketRepository)
+        public BasketController(IProductRepository productRepository, IBasketRepository basketRepository)
         {
             this.productRepository = productRepository;
             this.basketRepository = basketRepository;
@@ -25,9 +26,25 @@ namespace ApiGateway.Controllers
 
         [HttpGet]
         [Route("{basketId}")]
-        public async Task<List<Product>> GetProductById(string basketId)
+        public async Task<List<Product>> GetBasketById(string basketId)
         {
-            return await basketRepository.getBasket(basketId);
+            return await basketRepository.GetBasket(basketId);
+        }
+
+        [HttpPost]
+        public async Task<BasketPostResponse> CreateBasketOrAddToBasket([FromBody] BasketPostRequest req)
+        {
+            if (req.basketId == null)
+            {
+                var products = await productRepository.GetProductsByIdList(req.products);
+                String basketId = await basketRepository.CreateBasket(products);
+                var productsInBasket = await basketRepository.GetBasket(basketId);
+                var basketResponse = new BasketPostResponse();
+                basketResponse.basketId = basketId;
+                basketResponse.products = productsInBasket;
+                return basketResponse;
+            }
+            return null;
         }
     }
 }

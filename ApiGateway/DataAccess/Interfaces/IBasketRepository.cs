@@ -8,7 +8,12 @@ namespace DataAccess.Interfaces
 {
     public interface IBasketRepository
     {
-        public Task<List<Product>> getBasket(string basketId);
+        public Task<List<Product>> GetBasket(string basketId);
+        public  Task<List<Product>> AddToBasket(String basketId, List<Product> products);
+        public Task<String> CreateBasket(List<Product> products);
+
+
+
 
     }
 }
