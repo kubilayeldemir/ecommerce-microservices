@@ -1,9 +1,10 @@
-package com.Ecommerce.ProductCatalog;
+package com.Ecommerce.ProductCatalog.Controller;
 
+import com.Ecommerce.ProductCatalog.Model.Product;
+import com.Ecommerce.ProductCatalog.Model.ProductCreateDTO;
+import com.Ecommerce.ProductCatalog.Model.Mapper.ProductMapper;
+import com.Ecommerce.ProductCatalog.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,10 @@ public class ProductController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/{productId}")
+    public Product getProductById(@PathVariable String productId){
+        return  productService.getProductById(productId);
     }
 
 }

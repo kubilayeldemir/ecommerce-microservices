@@ -1,5 +1,8 @@
-package com.Ecommerce.ProductCatalog;
+package com.Ecommerce.ProductCatalog.Service;
 
+import com.Ecommerce.ProductCatalog.Exception.ProductNotFound;
+import com.Ecommerce.ProductCatalog.Model.Product;
+import com.Ecommerce.ProductCatalog.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,5 +60,13 @@ public class ProductService {
 
     public Page<Product> findAll(Pageable paging) {
         return productRepository.findAll(paging);
+    }
+
+    public Product getProductById(String productId){
+        var productOptional = productRepository.findById(productId);
+        if(!productOptional.isPresent()){
+            throw new ProductNotFound();
+        }
+        return productOptional.get();
     }
 }

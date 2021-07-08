@@ -1,4 +1,7 @@
-package com.Ecommerce.ProductCatalog;
+package com.Ecommerce.ProductCatalog.Model.Mapper;
+
+import com.Ecommerce.ProductCatalog.Model.Product;
+import com.Ecommerce.ProductCatalog.Model.ProductCreateDTO;
 
 import java.util.ArrayList;
 import java.util.List;

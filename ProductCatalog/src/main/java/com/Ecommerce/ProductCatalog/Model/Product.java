@@ -1,4 +1,4 @@
-package com.Ecommerce.ProductCatalog;
+package com.Ecommerce.ProductCatalog.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
