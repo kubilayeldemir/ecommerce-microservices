@@ -9,5 +9,6 @@ namespace DataAccess.Interfaces
     public interface IProductRepository
     {
         public Task<Product> GetProductById(string productId);
+        public Task<PagedProducts> GetProductsPaged(string brand, int page, int size);
     }
 }

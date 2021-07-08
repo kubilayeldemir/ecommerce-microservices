@@ -26,5 +26,15 @@ namespace ApiGateway.Controllers
         {
             return await productRepository.GetProductById(productId);
         }
+
+        [HttpGet]
+        [Route("paged")]
+        public async Task<PagedProducts> GetProductsPaged(
+            [FromQuery] string brand,
+            [FromQuery] int page,
+            [FromQuery] int size)
+        {
+            return await productRepository.GetProductsPaged(brand,page,size);
+        }
     }
 }
