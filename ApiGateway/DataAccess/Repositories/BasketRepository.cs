@@ -25,8 +25,7 @@ namespace DataAccess.Repositories
         public async Task<List<Product>> AddToBasket(String basketId, List<Product> products)
         {
             string endpoint = "basket/" + basketId;
-            //return await _client.GetAsync<List<Product>>(endpoint);
-            return null;
+            return await _client.PostAsync<List<Product>>(endpoint,products);
         }
 
         public async Task<String> CreateBasket(List<Product> products)

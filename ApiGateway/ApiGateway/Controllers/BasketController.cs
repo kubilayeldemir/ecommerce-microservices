@@ -26,25 +26,34 @@ namespace ApiGateway.Controllers
 
         [HttpGet]
         [Route("{basketId}")]
-        public async Task<List<Product>> GetBasketById(string basketId)
+        public async Task<BasketPostResponse> GetBasketById(string basketId)
         {
-            return await basketRepository.GetBasket(basketId);
+            var basketResponse = new BasketPostResponse();
+            basketResponse.products = await basketRepository.GetBasket(basketId);
+            basketResponse.basketId = basketId;
+            return basketResponse;
         }
 
         [HttpPost]
         public async Task<BasketPostResponse> CreateBasketOrAddToBasket([FromBody] BasketPostRequest req)
         {
-            if (req.basketId == null)
+            var realProducts = await productRepository.GetProductsByIdList(req.products);
+            var basketResponse = new BasketPostResponse();
+
+            if (String.IsNullOrEmpty(req.basketId))
             {
-                var products = await productRepository.GetProductsByIdList(req.products);
-                String basketId = await basketRepository.CreateBasket(products);
+                String basketId = await basketRepository.CreateBasket(realProducts);
                 var productsInBasket = await basketRepository.GetBasket(basketId);
-                var basketResponse = new BasketPostResponse();
                 basketResponse.basketId = basketId;
                 basketResponse.products = productsInBasket;
-                return basketResponse;
             }
-            return null;
+            else
+            {
+                var newBasket = await basketRepository.AddToBasket(req.basketId, realProducts);
+                basketResponse.basketId = req.basketId;
+                basketResponse.products = newBasket;
+            }
+            return basketResponse;
         }
     }
 }

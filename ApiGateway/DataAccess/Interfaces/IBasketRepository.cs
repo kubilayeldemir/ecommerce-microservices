@@ -12,8 +12,5 @@ namespace DataAccess.Interfaces
         public  Task<List<Product>> AddToBasket(String basketId, List<Product> products);
         public Task<String> CreateBasket(List<Product> products);
 
-
-
-
     }
 }
