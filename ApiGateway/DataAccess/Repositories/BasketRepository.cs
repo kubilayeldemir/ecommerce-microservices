@@ -36,8 +36,7 @@ namespace DataAccess.Repositories
         public async Task<String> DeleteBasket(string basketId)
         {
             string endpoint = "basket/"+ basketId;
-            //return await _client.PostAsync<String>(endpoint, products);
-            return null;
+            return await _client.DeleteAsync<String>(endpoint);
         }
     }
 }

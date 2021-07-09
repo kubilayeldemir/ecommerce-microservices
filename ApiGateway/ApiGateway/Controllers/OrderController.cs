@@ -39,7 +39,7 @@ namespace ApiGateway.Controllers
             var createdOrder = await orderRepository.createOrder(order);
             if (createdOrder.productList != null)
             {
-                //delete basket
+                await basketRepository.DeleteBasket(req.basketId);
             }
             return createdOrder;
         }

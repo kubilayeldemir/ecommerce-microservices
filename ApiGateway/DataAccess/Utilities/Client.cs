@@ -42,7 +42,17 @@ namespace DataAccess.Utilities
                 new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
             var res = await _httpClient.PostAsync(endpoint, httpContent);
             return await res.Content.ReadAsAsync<T>();
-        }        
+        }
+
+        public async Task<T> DeleteAsync<T>(string endpoint)
+        {            
+            var res = await _httpClient.DeleteAsync(endpoint);
+            if (!res.IsSuccessStatusCode)
+            {
+                throw new KeyNotFoundException("Not Found");
+            }
+            return await res.Content.ReadAsAsync<T>();
+        }
 
         public void Dispose()
         {
