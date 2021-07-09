@@ -32,6 +32,7 @@ namespace ApiGateway
             services.AddHttpClient<IClient, Client>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddSwaggerGen();
             services.AddControllers();
         }
