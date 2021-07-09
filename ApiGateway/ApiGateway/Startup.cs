@@ -32,6 +32,7 @@ namespace ApiGateway
             services.AddHttpClient<IClient, Client>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddSwaggerGen();
             services.AddControllers();
         }
 
@@ -45,9 +46,17 @@ namespace ApiGateway
 
             app.UseHttpsRedirection();
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Commer Microservices Api Gateway");
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
