@@ -9,5 +9,6 @@ namespace DataAccess.Interfaces
     public interface IOrderRepository
     {
         public Task<Order> getOrder(string orderId);
+        public Task<Order> createOrder(Order order);
     }
 }

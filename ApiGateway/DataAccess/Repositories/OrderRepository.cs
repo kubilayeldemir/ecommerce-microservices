@@ -20,5 +20,12 @@ namespace DataAccess.Repositories
             string endPoint = "order/" + orderId;
             return await _client.GetAsync<Order>(endPoint);
         }
+
+        public async Task<Order> createOrder(Order order)
+        {
+            //string endPoint = "order/"+
+            string endPoint = "order";
+            return await _client.PostAsync<Order>(endPoint, order);
+        }
     }
 }

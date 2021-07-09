@@ -23,10 +23,25 @@ namespace ApiGateway.Controllers
         }
 
         [HttpGet]
-        [Route("{basketId}")]
-        public async Task<Order> createOrderFromBasket(String basketId)
+        [Route("{orderId}")]
+        public async Task<Order> getOrder(String orderId)
         {
-            return await orderRepository.getOrder(basketId);
+            return await orderRepository.getOrder(orderId);
+        }
+
+        [HttpPost]
+        public async Task<Order> createOrderFromBasket([FromBody] OrderCreateRequest req)
+        {
+            var basketProducts = await basketRepository.GetBasket(req.basketId);
+            Order order = new Order();
+            order.owner = req.owner;
+            order.productList = OrderProductMapper.MapOrderProductsList(basketProducts);
+            var createdOrder = await orderRepository.createOrder(order);
+            if (createdOrder.productList != null)
+            {
+                //delete basket
+            }
+            return createdOrder;
         }
     }
 }
