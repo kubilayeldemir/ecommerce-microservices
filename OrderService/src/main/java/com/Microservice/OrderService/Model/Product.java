@@ -19,13 +19,19 @@ public class Product {
     @NotNull
     private String productId;
     private String unique_id;
+
+    @Column(length = 9999)
     private String URL;
     private String name;
     private String category;
+
+    @Column(length = 9999)
     private String description;
     private String brand;
     private int retailPrice;
     private int discountedPrice;
+
+    @Column(length = 9999)
     private String images;
     private int stock;
 }
