@@ -2,7 +2,7 @@ package com.Microservice.OrderService.Controller;
 
 import com.Microservice.OrderService.Model.Order;
 import com.Microservice.OrderService.Model.OrderCreateDTO;
-import com.Microservice.OrderService.Model.OrderMapper;
+import com.Microservice.OrderService.Model.Mapper.OrderMapper;
 import com.Microservice.OrderService.Repository.OrderRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,14 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order saveOrder(@RequestBody OrderCreateDTO order){
+    public Order saveOrder(@RequestBody OrderCreateDTO order) {
         return orderRepository.save(OrderMapper.mapOrder(order));
     }
+
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrder(@PathVariable UUID orderId){
+    public ResponseEntity<Order> getOrder(@PathVariable UUID orderId) {
         var order = orderRepository.findById(orderId);
-        if(!order.isPresent()){
+        if (!order.isPresent()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(order.get(), HttpStatus.OK);

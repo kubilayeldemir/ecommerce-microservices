@@ -3,12 +3,18 @@ package com.Microservice.OrderService.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @Column(name = "Id")
@@ -19,6 +25,11 @@ public class Product {
     @NotNull
     private String productId;
     private String unique_id;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    @JsonIgnore
+    private Order order;
 
     @Column(length = 9999)
     private String URL;
