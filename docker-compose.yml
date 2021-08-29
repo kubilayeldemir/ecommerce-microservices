@@ -1,0 +1,8 @@
+version: "3.3"
+services:
+  product-catalog:
+    build: ProductCatalog/
+    environment:
+      MONGODBATLASURI: ${MONGODBATLASURI}
+    ports:
+      - "8085:8080"

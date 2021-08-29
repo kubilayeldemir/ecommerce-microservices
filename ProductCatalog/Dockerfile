@@ -8,6 +8,4 @@ RUN ["mvn","clean","install","-Dmaven.test.skip=true"]
 FROM openjdk:11-jre-slim
 COPY --from=build home/app/target/product-category.jar app/product-category.jar
 EXPOSE 8080
-ARG mongodb_url=default_value
-ENV MONGODBATLASURI=$mongodb_url
 ENTRYPOINT ["java","-jar","app/product-category.jar"]
