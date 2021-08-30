@@ -6,3 +6,10 @@ services:
       MONGODBATLASURI: ${MONGODBATLASURI}
     ports:
       - "8085:8080"
+  basket_service:
+    build: basket-microservice/
+    environment:
+      REDIS_URL: ${REDIS_URL}
+      RESET_REDIS_PW: ${RESET_REDIS_PW}
+    ports:
+      - "8086:3000"
