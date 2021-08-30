@@ -1,4 +1,6 @@
 version: "3.3"
+networks:
+  basket_redis:
 services:
   product-catalog:
     build: ProductCatalog/
@@ -9,7 +11,17 @@ services:
   basket_service:
     build: basket-microservice/
     environment:
-      REDIS_URL: ${REDIS_URL}
+      REDIS_URL: "redis"
       RESET_REDIS_PW: ${RESET_REDIS_PW}
     ports:
       - "8086:3000"
+    depends_on:
+      - redis
+    networks:
+      - basket_redis
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - basket_redis
