@@ -13,7 +13,7 @@ namespace DataAccess.Repositories
         public BasketRepository(IClient client)
         {
             this._client = client;
-            this._client.SetBaseAddress("http://localhost:3000/api/");
+            this._client.SetBaseAddress(Environment.GetEnvironmentVariable("BASKET_SERVICE"));
         }
 
         public async Task<List<Product>> GetBasket(string basketId)

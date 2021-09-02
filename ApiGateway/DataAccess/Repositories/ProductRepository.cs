@@ -15,7 +15,7 @@ namespace DataAccess.Repositories
         public ProductRepository(IClient client)
         {
             this._client = client;
-            this._client.SetBaseAddress("http://localhost:8080/api/");
+            this._client.SetBaseAddress(Environment.GetEnvironmentVariable("PRODUCT_SERVICE"));
         }
         public async Task<Product> GetProductById(string productId)
         {

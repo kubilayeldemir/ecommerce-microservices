@@ -1,7 +1,19 @@
 version: "3.3"
-networks:
-  basket_redis:
 services:
+  api-gateway:
+    build:
+      context: ApiGateway/
+      dockerfile: ./ApiGateway/Dockerfile
+    environment:
+      BASKET_SERVICE: "http://basket_service:3000/api/"
+      ORDER_SERVICE: "http://order_service:8080/api/"
+      PRODUCT_SERVICE: "http://product-catalog:8080/api/"
+    ports:
+      - "8080:80"
+    depends_on:
+      - product-catalog
+      - basket_service
+      - order_service
   product-catalog:
     build: ProductCatalog/
     environment:
@@ -17,14 +29,10 @@ services:
       - "8086:3000"
     depends_on:
       - redis
-    networks:
-      - basket_redis
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
-    networks:
-      - basket_redis
   order_service:
     build: OrderService/
     ports:

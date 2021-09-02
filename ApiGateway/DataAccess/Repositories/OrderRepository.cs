@@ -13,7 +13,7 @@ namespace DataAccess.Repositories
         public OrderRepository(IClient client)
         {
             this._client = client;
-            this._client.SetBaseAddress("http://localhost:8056/api/");
+            this._client.SetBaseAddress(Environment.GetEnvironmentVariable("ORDER_SERVICE"));
         }
         public async Task<Order> getOrder(string orderId)
         {
