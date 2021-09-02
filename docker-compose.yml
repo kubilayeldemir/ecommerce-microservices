@@ -5,22 +5,22 @@ services:
       context: ApiGateway/
       dockerfile: ./ApiGateway/Dockerfile
     environment:
-      BASKET_SERVICE: "http://basket_service:3000/api/"
-      ORDER_SERVICE: "http://order_service:8080/api/"
+      BASKET_SERVICE: "http://basket-service:3000/api/"
+      ORDER_SERVICE: "http://order-service:8080/api/"
       PRODUCT_SERVICE: "http://product-catalog:8080/api/"
     ports:
       - "8080:80"
     depends_on:
       - product-catalog
-      - basket_service
-      - order_service
+      - basket-service
+      - order-service
   product-catalog:
     build: ProductCatalog/
     environment:
       MONGODBATLASURI: ${MONGODBATLASURI}
     ports:
       - "8085:8080"
-  basket_service:
+  basket-service:
     build: basket-microservice/
     environment:
       REDIS_URL: "redis"
@@ -33,7 +33,7 @@ services:
     image: "redis:alpine"
     ports:
       - "6379:6379"
-  order_service:
+  order-service:
     build: OrderService/
     ports:
       - "8075:8080"
