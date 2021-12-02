@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace SearchEngine.Models
 {
     public class Product
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string UniqueId { get; set; }
         public string Url { get; set; }
         public string Name { get; set; }
