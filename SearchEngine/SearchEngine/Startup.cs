@@ -29,7 +29,7 @@ namespace SearchEngine
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "SearchEngine", Version = "v1"});
             });
             ElasticClient client = new ElasticClient(new ConnectionSettings(uri: new Uri("http://localhost:9200")));
-            IProductRepository productRepository = new ProductRepository(client);
+            IProductRepository productRepository = new ProductRepository(client,"product-alias");
             services.AddSingleton(productRepository);
             services.AddSingleton<IProductService, ProductService>();
         }
