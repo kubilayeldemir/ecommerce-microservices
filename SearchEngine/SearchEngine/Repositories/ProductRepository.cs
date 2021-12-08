@@ -16,7 +16,7 @@ namespace SearchEngine.Repositories
 
         public ProductRepository(ElasticClient client, string aliasName)
         {
-            this._client = client;
+            _client = client;
             _aliasName = aliasName;
             CreateElasticRepository(client).GetAwaiter().GetResult();
         }
@@ -92,7 +92,7 @@ namespace SearchEngine.Repositories
             throw new Exception("Couldn't save product");
         }
 
-        public async Task<bool> BulkSave(List<Product> products)
+        public async Task<List<Guid>> BulkSave(List<Product> products)
         {
             products.ForEach(p => p.Id = Guid.NewGuid());
 
@@ -103,10 +103,10 @@ namespace SearchEngine.Repositories
 
             if (!savedProducts.IsValid)
             {
-                throw new Exception("Couldn't save product");
+                throw new Exception("Couldn't save product"+savedProducts.OriginalException.Message);
             }
 
-            return true;
+            return savedProducts.Items.Select(x => Guid.Parse(x.Id)).ToList();
         }
     }
 }

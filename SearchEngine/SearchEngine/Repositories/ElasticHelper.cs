@@ -10,7 +10,7 @@ namespace SearchEngine.Repositories
             Func<TypeMappingDescriptor<T>, ITypeMapping> mapping) where T : class
         {
             var index = $"{aliasName}-{DateTime.Now:yyyyMMddhhmm}";
-            if (!await CheckAliasExists(index, client))
+            if (!await CheckAliasExists(aliasName, client))
             {
                 await ElasticHelper.CreateIndexAsync(index, aliasName, mapping, client);
             }

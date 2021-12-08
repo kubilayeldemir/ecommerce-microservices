@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace SearchEngine.Controllers
+namespace SearchEngine.V1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
