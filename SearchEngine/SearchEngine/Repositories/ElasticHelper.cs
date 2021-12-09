@@ -12,15 +12,23 @@ namespace SearchEngine.Repositories
             var index = $"{aliasName}-{DateTime.Now:yyyyMMddhhmm}";
             if (!await CheckAliasExists(aliasName, client))
             {
-                await ElasticHelper.CreateIndexAsync(index, aliasName, mapping, client);
+                Console.WriteLine($"Creating index: {index + " --- " + aliasName}");
+                await CreateIndexAsync(index, aliasName, mapping, client);
             }
+            else
+            {
+                Console.WriteLine($"{index + " --- " + aliasName} already exists.");
+            }
+
         }
 
         private static async Task<bool> CheckAliasExists(string aliasName, ElasticClient client)
         {
             var response = await client.Indices.AliasExistsAsync(aliasName);
             if (response.OriginalException != null && !response.IsValid)
+            {
                 return false;
+            }
             return response.Exists;
         }
 

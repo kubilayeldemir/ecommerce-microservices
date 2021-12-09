@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SearchEngine.Services;
 
 namespace SearchEngine.V1.Controllers
 {
@@ -8,10 +9,12 @@ namespace SearchEngine.V1.Controllers
     public class SearchController : ControllerBase
     {
         private readonly ILogger<SearchController> _logger;
+        private readonly IProductService _productService;
 
-        public SearchController(ILogger<SearchController> logger)
+        public SearchController(ILogger<SearchController> logger, IProductService productService)
         {
             _logger = logger;
+            _productService = productService;
         }
         
         [HttpGet("/q/{query}")]

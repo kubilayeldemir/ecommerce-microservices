@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +32,12 @@ namespace SearchEngine.V1.Controllers
         [HttpPost("/bulk")]
         public async Task<IActionResult> BulksSave([FromBody] List<ProductRequestModel> model)
         {
-            _logger.LogInformation("Bulk saving...");
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             await _productService.BulkSaveProduct(model.Select(x => x.ToModel()).ToList());
+            stopwatch.Stop();
+            _logger.LogInformation($"Bulk saved {model.Count}, Took:{stopwatch.Elapsed}");
+            
             return Accepted(model);
         }
     }
