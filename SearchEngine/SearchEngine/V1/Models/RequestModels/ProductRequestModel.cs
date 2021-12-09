@@ -13,8 +13,8 @@ namespace SearchEngine.V1.Models.RequestModels
         public List<string> Category { get; set; }
         public string Description { get; set; }
         public string Brand { get; set; }
-        public int RetailPrice { get; set; }
-        public int DiscountedPrice { get; set; }
+        public float RetailPrice { get; set; }
+        public float DiscountedPrice { get; set; }
         public List<string> Images { get; set; }
         public int Stock { get; set; }
 
