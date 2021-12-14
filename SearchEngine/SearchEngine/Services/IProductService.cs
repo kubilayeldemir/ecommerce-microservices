@@ -8,6 +8,7 @@ namespace SearchEngine.Services
 {
     public interface IProductService
     {
+        public Task<List<Product>> QueryCombineFields(string query, int from, int size);
         public Task<List<Product>> Get(GetProductRequestModel model, int from, int size);
         public Task<Guid> SaveProduct(Product product);
         public Task<List<Guid>> BulkSaveProduct(List<Product> product);

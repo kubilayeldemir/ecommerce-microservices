@@ -26,6 +26,32 @@ namespace SearchEngine.Repositories
             await ElasticHelper.CheckAndCreateAlias<Product>(_aliasName, client, null);
         }
 
+        public async Task<List<Product>> QueryCombineFields(string query, int from, int size)
+        {
+            var searchDescriptor = new SearchDescriptor<Product>()
+                .Query(q => q.CombinedFields(p =>
+                        p.Fields(f => f
+                                .Field(k => k.Name)
+                                .Field(k => k.Brand)
+                                .Field(k => k.Description)
+                                .Field(k => k.Category))
+                            .Query(query)
+                    )
+                )
+                .Index(_aliasName)
+                .From(from)
+                .Size(size);
+
+            var result = await _client.SearchAsync<Product>(searchDescriptor);
+
+            if (!result.IsValid)
+            {
+                throw new ElasticsearchClientException($"Search Error q:{query}");
+            }
+
+            return result.Documents.ToList();
+        }
+
         public async Task<List<Product>> Get(GetProductRequestModel model, int from, int size = 10)
         {
             QueryContainer GenerateQuery(QueryContainerDescriptor<Product> q)
@@ -68,7 +94,7 @@ namespace SearchEngine.Repositories
                 .Index(_aliasName)
                 .From(from)
                 .Size(size);
-            
+
             var result = await _client.SearchAsync<Product>(searchDescriptor);
 
             if (!result.IsValid)
@@ -103,7 +129,7 @@ namespace SearchEngine.Repositories
 
             if (!savedProducts.IsValid)
             {
-                throw new Exception("Couldn't save product"+savedProducts.OriginalException.Message);
+                throw new Exception("Couldn't save product" + savedProducts.OriginalException.Message);
             }
 
             return savedProducts.Items.Select(x => Guid.Parse(x.Id)).ToList();

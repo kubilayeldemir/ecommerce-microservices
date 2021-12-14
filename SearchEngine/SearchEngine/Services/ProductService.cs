@@ -26,6 +26,11 @@ namespace SearchEngine.Services
             return await _productRepository.BulkSave(product);
         }
 
+        public async Task<List<Product>> QueryCombineFields(string query, int from, int size)
+        {
+            return await _productRepository.QueryCombineFields(query, from, size);
+        }
+
         public async Task<List<Product>> Get(GetProductRequestModel model, int from, int size)
         {
             return await _productRepository.Get(model, from, size);

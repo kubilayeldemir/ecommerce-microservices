@@ -20,10 +20,11 @@ namespace SearchEngine.V1.Controllers
         }
 
         [HttpGet("/q/{query}")]
-        public IActionResult Query([FromRoute] string query)
+        public async Task<IActionResult> Query([FromRoute] string query, [FromQuery] int size, [FromQuery] int @from)
         {
             _logger.LogInformation($"Search query:{query}");
-            return Ok();
+            var result = await _productService.QueryCombineFields(query, @from, size);
+            return Ok(result);
         }
 
         [HttpGet]
