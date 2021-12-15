@@ -20,7 +20,7 @@ namespace SearchEngine.Services
         {
             return await _productRepository.Save(product);
         }
-        
+
         public async Task<List<Guid>> BulkSaveProduct(List<Product> product)
         {
             return await _productRepository.BulkSave(product);
@@ -28,7 +28,14 @@ namespace SearchEngine.Services
 
         public async Task<List<Product>> QueryCombineFields(string query, int from, int size)
         {
+            size = size == 0 ? 25 : size;
             return await _productRepository.QueryCombineFields(query, from, size);
+        }
+
+        public async Task<List<Product>> QueryMultiMatch(string query, int from, int size)
+        {
+            size = size == 0 ? 25 : size;
+            return await _productRepository.QueryMultiMatch(query, from, size);
         }
 
         public async Task<List<Product>> Get(GetProductRequestModel model, int from, int size)

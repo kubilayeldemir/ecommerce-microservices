@@ -52,6 +52,34 @@ namespace SearchEngine.Repositories
             return result.Documents.ToList();
         }
 
+        public async Task<List<Product>> QueryMultiMatch(string query, int from, int size)
+        {
+            var searchDescriptor = new SearchDescriptor<Product>()
+                .Query(q => q.MultiMatch(p =>
+                        p.Fields(f => f
+                                .Field(k => k.Name, 3)
+                                .Field(k => k.Brand)
+                                .Field(k => k.Description)
+                                .Field(k => k.Category))
+                            .Fuzziness(Fuzziness.Auto)
+                            .Query(query)
+                    )
+                )
+                .Index(_aliasName)
+                .From(from)
+                .Size(size);
+            var json = _client.RequestResponseSerializer.SerializeToString(searchDescriptor);
+
+            var result = await _client.SearchAsync<Product>(searchDescriptor);
+
+            if (!result.IsValid)
+            {
+                throw new ElasticsearchClientException($"Search Error q:{query}");
+            }
+
+            return result.Documents.ToList();
+        }
+
         public async Task<List<Product>> Get(GetProductRequestModel model, int from, int size = 10)
         {
             QueryContainer GenerateQuery(QueryContainerDescriptor<Product> q)

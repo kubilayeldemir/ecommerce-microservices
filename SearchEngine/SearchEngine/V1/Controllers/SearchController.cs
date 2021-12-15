@@ -20,17 +20,26 @@ namespace SearchEngine.V1.Controllers
         }
 
         [HttpGet("/q/{query}")]
-        public async Task<IActionResult> Query([FromRoute] string query, [FromQuery] int size, [FromQuery] int @from)
+        public async Task<IActionResult> QueryMultiFields([FromRoute] string query, [FromQuery] int size,
+            [FromQuery] int @from)
         {
             _logger.LogInformation($"Search query:{query}");
             var result = await _productService.QueryCombineFields(query, @from, size);
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Query([FromQuery] GetProductRequestModel model)
+        [HttpGet("/qmm/{query}")]
+        public async Task<IActionResult> QueryMultimatch([FromRoute] string query, [FromQuery] int size,
+            [FromQuery] int @from)
         {
-            var products = await _productService.Get(model, model.From, model.Size == 0 ? 10: model.Size);
+            var products = await _productService.QueryMultiMatch(query, from, size);
+            return Ok(products);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] GetProductRequestModel model)
+        {
+            var products = await _productService.Get(model, model.From, model.Size == 0 ? 10 : model.Size);
             return Ok(products);
         }
     }
