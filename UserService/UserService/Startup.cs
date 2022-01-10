@@ -11,11 +11,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using UserService.Repositories;
+using UserService.Services;
 
 namespace UserService
 {
     public class Startup
     {
+        //TODO needs to be an env variable or something secure
+        public static string JwtPasswordChangeLater = "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" +
+                                                      "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd"; 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +32,9 @@ namespace UserService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<IUserService, Services.UserService>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "UserService", Version = "v1"});
