@@ -17,7 +17,10 @@ namespace UserService.Services
 
         public async Task<string> AuthenticateUserAndGenerateJwtToken(string email, string password)
         {
-            var isCredentialsCorrect = await _userRepository.CheckIfUserCredentialsCorrect(email, password);
+            var userSalt = await _userRepository.GetUserSalt(email);
+            var hashedModel = EncryptionHelper.EncryptData(password, userSalt);
+            password = hashedModel.hashedData;
+            var isCredentialsCorrect = await AuthenticateUser(email, password);
             if (!isCredentialsCorrect) return null;
             var user = await _userRepository.GetUserByEmail(email);
             return JwtHelper.GenerateJwtToken(user);
@@ -25,12 +28,13 @@ namespace UserService.Services
 
         public async Task<User> RegisterUser(string email, string password)
         {
+            var hashedModel = EncryptionHelper.EncryptData(password);
             var user = new User
             {
                 Id = Guid.NewGuid(),
                 Email = email,
-                Password = password,
-                Salt = Guid.Empty.ToString()
+                Password = hashedModel.HashedData,
+                Salt = hashedModel.Salt
             };
             await _userRepository.SaveUser(user);
             return user;

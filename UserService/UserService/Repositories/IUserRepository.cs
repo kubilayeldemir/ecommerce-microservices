@@ -7,6 +7,7 @@ namespace UserService.Repositories
     {
         Task<bool> CheckIfUserCredentialsCorrect(string email, string password);
         Task<User> GetUserByEmail(string email);
+        Task<string> GetUserSalt(string email);
         Task<User> SaveUser(User user);
     }
 }
