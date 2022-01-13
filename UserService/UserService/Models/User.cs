@@ -13,6 +13,12 @@ namespace UserService.Models
         [JsonIgnore]
         public string Password { get; set; }
         public string Salt { get; set; }
+        public DateTime CreatedAt { get; set; }
         private string JwtToken { get; set; }
+
+        public bool CheckIfUserCredentialsCorrect(string email, string password)
+        {
+            return Email == email && Password == password;
+        }
     }
 }

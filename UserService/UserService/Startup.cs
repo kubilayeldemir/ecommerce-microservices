@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using UserService.Repositories;
 using UserService.Services;
@@ -20,7 +13,8 @@ namespace UserService
     {
         //TODO needs to be an env variable or something secure
         public static string JwtPasswordChangeLater = "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" +
-                                                      "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd"; 
+                                                      "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
