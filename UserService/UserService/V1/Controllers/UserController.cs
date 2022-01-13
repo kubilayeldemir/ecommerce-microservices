@@ -21,11 +21,12 @@ namespace UserService.V1.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> AuthenticateUser([FromBody] UserLoginRequestModel model)
         {
-            var jwtToken = await _userService.AuthenticateUserAndGenerateJwtToken(model.Email, model.Password);
-            if (jwtToken.IsNullOrEmpty())
+            var (isAuthenticated, user) = await _userService.AuthenticateUser(model.Email, model.Password);
+            if (!isAuthenticated)
             {
                 return Unauthorized();
             }
+            var jwtToken = await _userService.GenerateJwtTokenForUser(user);
             return Ok(new JwtResponseModel(jwtToken));
         }
         
