@@ -1,44 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Npgsql;
 using UserService.Models;
 
 namespace UserService.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        //TODO use postgresql and dapper to store and retrieve user data
-        private static Dictionary<string,User> users = new Dictionary<string,User>();
-
-        public async Task<bool> CheckIfUserCredentialsCorrect(string email, string password)
-        {
-            // SELECT EXISTS (
-            //     SELECT * FROM login_details WHERE username = ? AND password = ?
-            //     )
-            if (users.ContainsKey(email))
-            {
-                var userFound = users[email];
-                if (userFound.Email == email && userFound.Password == password)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        private readonly string _dbConnectionString = Environment.GetEnvironmentVariable("USER_SERVICE_DB_CONN_STRING");
 
         public async Task<User> GetUserByEmail(string email)
         {
-            return users.ContainsKey(email) ? users[email] : null;
-        }
-        
-        public async Task<string> GetUserSalt(string email)
-        {
-            return users.ContainsKey(email) ? users[email].Salt : null;
+            string sql = @"SELECT * FROM users where email=@Email";
+
+            using (var connection = new NpgsqlConnection(_dbConnectionString))
+            {
+                var user = await connection.QueryAsync<User>(sql, new
+                {
+                    email
+                });
+                return user.FirstOrDefault();
+            }
         }
 
         public async Task<User> SaveUser(User user)
         {
-            users[user.Email] = user;
-            return user;
+            string insertQuery = @"insert into users (email, id, password, salt, role, name, lastname,createdAt)
+                                values (@Email, @Id,@Password,@salt,@role,@name,@lastname,@createdAt);";
+
+            using (IDbConnection db = new NpgsqlConnection(this._dbConnectionString))
+            {
+                var affectedRows = await db.ExecuteAsync(insertQuery, user);
+                if (affectedRows == 1)
+                {
+                    return user;
+                }
+            }
+
+            return null;
         }
     }
 }

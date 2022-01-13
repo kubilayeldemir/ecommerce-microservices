@@ -17,12 +17,12 @@ namespace UserService.Services
 
         public async Task<string> AuthenticateUserAndGenerateJwtToken(string email, string password)
         {
-            var userSalt = await _userRepository.GetUserSalt(email);
-            var hashedModel = EncryptionHelper.EncryptData(password, userSalt);
-            password = hashedModel.hashedData;
-            var isCredentialsCorrect = await AuthenticateUser(email, password);
-            if (!isCredentialsCorrect) return null;
             var user = await _userRepository.GetUserByEmail(email);
+            var userSalt = user.Salt;
+            var hashedModel = EncryptionHelper.EncryptData(password, userSalt);
+            var hashedPassword = hashedModel.hashedData;
+            var isCredentialsCorrect = user.CheckIfUserCredentialsCorrect(email, hashedPassword);
+            if (!isCredentialsCorrect) return null;
             return JwtHelper.GenerateJwtToken(user);
         }
 
@@ -34,15 +34,12 @@ namespace UserService.Services
                 Id = Guid.NewGuid(),
                 Email = email,
                 Password = hashedModel.HashedData,
-                Salt = hashedModel.Salt
+                Salt = hashedModel.Salt,
+                Role = "user",
+                CreatedAt = DateTime.UtcNow
             };
             await _userRepository.SaveUser(user);
             return user;
-        }
-
-        private async Task<bool> AuthenticateUser(string email, string password)
-        {
-            return await _userRepository.CheckIfUserCredentialsCorrect(email, password);
         }
     }
 }
