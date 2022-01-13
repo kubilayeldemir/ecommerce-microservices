@@ -5,7 +5,8 @@ namespace UserService.Services
 {
     public interface IUserService
     {
-        Task<string> AuthenticateUserAndGenerateJwtToken(string email, string password);
+        Task<(bool isAuthenticated,User user)> AuthenticateUser(string email, string password);
+        Task<string> GenerateJwtTokenForUser(User user);
         Task<User> RegisterUser(string email, string password);
     }
 }
