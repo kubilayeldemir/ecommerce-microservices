@@ -24,9 +24,10 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IClient, Client>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddSingleton<IProductRepository, ProductRepository>();
+            services.AddSingleton<IBasketRepository, BasketRepository>();
+            services.AddSingleton<IOrderRepository, OrderRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSwaggerGen();
             services.AddControllers();
         }

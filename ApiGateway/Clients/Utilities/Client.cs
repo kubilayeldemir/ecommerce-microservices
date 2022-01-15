@@ -43,6 +43,10 @@ namespace Clients.Utilities
             var httpContent =
                 new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
             var res = await _httpClient.PostAsync(endpoint, httpContent);
+            if (!res.IsSuccessStatusCode)
+            {
+                return default;
+            }
             return await res.Content.ReadAsAsync<T>();
         }
 
