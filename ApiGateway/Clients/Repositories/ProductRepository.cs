@@ -1,13 +1,11 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using Clients.Interfaces;
+using Clients.Models;
 
-namespace DataAccess.Repositories
+namespace Clients.Repositories
 {
     public class ProductRepository: IProductRepository
     {

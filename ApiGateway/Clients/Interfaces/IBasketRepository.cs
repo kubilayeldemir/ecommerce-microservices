@@ -1,10 +1,9 @@
-﻿using DataAccess.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Clients.Models;
 
-namespace DataAccess.Interfaces
+namespace Clients.Interfaces
 {
     public interface IBasketRepository
     {

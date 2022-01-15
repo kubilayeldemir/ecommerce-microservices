@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace DataAccess.Models
+namespace Clients.Models
 {
     public class PagedProducts
     {

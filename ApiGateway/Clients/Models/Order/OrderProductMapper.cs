@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace DataAccess.Models.Order
+namespace Clients.Models.Order
 {
     public class OrderProductMapper
     {

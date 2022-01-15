@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["./ApiGateway/ApiGateway.csproj", "ApiGateway/"]
-COPY ["./DataAccess/DataAccess.csproj", "DataAccess/"]
+COPY ["./Clients/Clients.csproj", "DataAccess/"]
 RUN dotnet restore "ApiGateway/ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/ApiGateway"

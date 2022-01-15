@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DataAccess.Models.Order
+namespace Clients.Models.Order
 {
     public class OrderProduct
     {

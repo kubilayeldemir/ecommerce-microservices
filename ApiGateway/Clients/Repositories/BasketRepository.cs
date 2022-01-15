@@ -1,11 +1,11 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Clients.Interfaces;
+using Clients.Models;
 
-namespace DataAccess.Repositories
+namespace Clients.Repositories
 {
     public class BasketRepository:IBasketRepository
     {
