@@ -1,3 +1,4 @@
+using System;
 using Clients.Interfaces;
 using Clients.Repositories;
 using Clients.Utilities;
@@ -14,6 +15,7 @@ namespace ApiGateway
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Console.WriteLine("Swagger: https://localhost:5001/swagger/index.html");
         }
 
         public IConfiguration Configuration { get; }
@@ -50,11 +52,7 @@ namespace ApiGateway
 
             app.UseAuthorization();
 
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

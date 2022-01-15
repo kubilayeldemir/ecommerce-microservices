@@ -20,13 +20,15 @@ namespace Clients.Models.Order
             op.URL = product.URL;
             return op;
         }
+
         public static List<OrderProduct> MapOrderProductsList(List<Product> products)
         {
             var mappedProducts = new List<OrderProduct>();
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 mappedProducts.Add(MapOrderProduct(product));
             }
+
             return mappedProducts;
         }
     }

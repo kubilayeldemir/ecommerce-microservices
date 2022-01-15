@@ -1,7 +1,6 @@
 ﻿using Clients.Interfaces;
 using Clients.Models.Basket;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace ApiGateway.Controllers
@@ -10,14 +9,14 @@ namespace ApiGateway.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        private readonly IProductRepository productRepository;
-        private readonly IBasketRepository basketRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IBasketRepository _basketRepository;
 
 
         public BasketController(IProductRepository productRepository, IBasketRepository basketRepository)
         {
-            this.productRepository = productRepository;
-            this.basketRepository = basketRepository;
+            _productRepository = productRepository;
+            _basketRepository = basketRepository;
         }
 
         [HttpGet]
@@ -25,7 +24,7 @@ namespace ApiGateway.Controllers
         public async Task<BasketPostResponse> GetBasketById(string basketId)
         {
             var basketResponse = new BasketPostResponse();
-            basketResponse.products = await basketRepository.GetBasket(basketId);
+            basketResponse.products = await _basketRepository.GetBasket(basketId);
             basketResponse.basketId = basketId;
             return basketResponse;
         }
@@ -33,22 +32,23 @@ namespace ApiGateway.Controllers
         [HttpPost]
         public async Task<BasketPostResponse> CreateBasketOrAddToBasket([FromBody] BasketPostRequest req)
         {
-            var realProducts = await productRepository.GetProductsByIdList(req.products);
+            var realProducts = await _productRepository.GetProductsByIdList(req.products);
             var basketResponse = new BasketPostResponse();
 
-            if (String.IsNullOrEmpty(req.basketId))
+            if (string.IsNullOrEmpty(req.basketId))
             {
-                String basketId = await basketRepository.CreateBasket(realProducts);
-                var productsInBasket = await basketRepository.GetBasket(basketId);
+                var basketId = await _basketRepository.CreateBasket(realProducts);
+                var productsInBasket = await _basketRepository.GetBasket(basketId);
                 basketResponse.basketId = basketId;
                 basketResponse.products = productsInBasket;
             }
             else
             {
-                var newBasket = await basketRepository.AddToBasket(req.basketId, realProducts);
+                var newBasket = await _basketRepository.AddToBasket(req.basketId, realProducts);
                 basketResponse.basketId = req.basketId;
                 basketResponse.products = newBasket;
             }
+
             return basketResponse;
         }
     }

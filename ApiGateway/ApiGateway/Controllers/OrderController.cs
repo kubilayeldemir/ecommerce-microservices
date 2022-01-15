@@ -1,7 +1,6 @@
 ﻿using Clients.Interfaces;
 using Clients.Models.Order;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace ApiGateway.Controllers
@@ -10,34 +9,35 @@ namespace ApiGateway.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IBasketRepository basketRepository;
-        private readonly IOrderRepository orderRepository;
+        private readonly IBasketRepository _basketRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrderController(IOrderRepository orderRepository,IBasketRepository basketRepository)
+        public OrderController(IOrderRepository orderRepository, IBasketRepository basketRepository)
         {
-            this.basketRepository = basketRepository;
-            this.orderRepository = orderRepository;
+            _basketRepository = basketRepository;
+            _orderRepository = orderRepository;
         }
 
         [HttpGet]
         [Route("{orderId}")]
-        public async Task<Order> getOrder(String orderId)
+        public async Task<Order> GetOrder(string orderId)
         {
-            return await orderRepository.getOrder(orderId);
+            return await _orderRepository.GetOrder(orderId);
         }
 
         [HttpPost]
-        public async Task<Order> createOrderFromBasket([FromBody] OrderCreateRequest req)
+        public async Task<Order> CreateOrderFromBasket([FromBody] OrderCreateRequest req)
         {
-            var basketProducts = await basketRepository.GetBasket(req.basketId);
-            Order order = new Order();
+            var basketProducts = await _basketRepository.GetBasket(req.basketId);
+            var order = new Order();
             order.owner = req.owner;
             order.productList = OrderProductMapper.MapOrderProductsList(basketProducts);
-            var createdOrder = await orderRepository.createOrder(order);
+            var createdOrder = await _orderRepository.CreateOrder(order);
             if (createdOrder.productList != null)
             {
-                await basketRepository.DeleteBasket(req.basketId);
+                await _basketRepository.DeleteBasket(req.basketId);
             }
+
             return createdOrder;
         }
     }

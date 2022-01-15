@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Clients.Models.Order
+﻿namespace Clients.Models.Order
 {
     public class OrderCreateRequest
     {
-        public String basketId { get; set; }
+        public string basketId { get; set; }
         public User owner { get; set; }
     }
 }
