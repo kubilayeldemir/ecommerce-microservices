@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DataAccess.Models.Basket
+namespace Clients.Models.Basket
 {
     public class BasketPostRequest
     {

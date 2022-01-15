@@ -1,10 +1,7 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.Models.Order;
-using Microsoft.AspNetCore.Http;
+﻿using Clients.Interfaces;
+using Clients.Models.Order;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApiGateway.Controllers

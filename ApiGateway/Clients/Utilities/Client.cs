@@ -1,11 +1,12 @@
-﻿using DataAccess.Interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-namespace DataAccess.Utilities
+using Clients.Interfaces;
+
+namespace Clients.Utilities
 {
     public class Client : IDisposable, IClient
     {

@@ -1,11 +1,9 @@
-﻿using DataAccess.Interfaces;
-using DataAccess.Models.Order;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using Clients.Interfaces;
+using Clients.Models.Order;
 
-namespace DataAccess.Repositories
+namespace Clients.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
