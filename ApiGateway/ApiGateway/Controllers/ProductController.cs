@@ -9,18 +9,18 @@ namespace ApiGateway.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductRepository _productRepository;
 
         public ProductController(IProductRepository productRepository)
         {
-            this.productRepository = productRepository;
+            _productRepository = productRepository;
         }
 
         [HttpGet]
         [Route("{productId}")]
         public async Task<Product> GetProductById(string productId)
         {
-            return await productRepository.GetProductById(productId);
+            return await _productRepository.GetProductById(productId);
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace ApiGateway.Controllers
             [FromQuery] int page,
             [FromQuery] int size)
         {
-            return await productRepository.GetProductsPaged(brand,page,size);
+            return await _productRepository.GetProductsPaged(brand, page, size);
         }
     }
 }

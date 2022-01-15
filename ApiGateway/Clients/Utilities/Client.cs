@@ -34,6 +34,7 @@ namespace Clients.Utilities
             {
                 throw new KeyNotFoundException("Not Found");
             }
+
             return await res.Content.ReadAsAsync<T>();
         }
 
@@ -46,12 +47,13 @@ namespace Clients.Utilities
         }
 
         public async Task<T> DeleteAsync<T>(string endpoint)
-        {            
+        {
             var res = await _httpClient.DeleteAsync(endpoint);
             if (!res.IsSuccessStatusCode)
             {
                 throw new KeyNotFoundException("Not Found");
             }
+
             return await res.Content.ReadAsAsync<T>();
         }
 

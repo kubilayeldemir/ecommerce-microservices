@@ -8,21 +8,23 @@ namespace Clients.Repositories
     public class OrderRepository : IOrderRepository
     {
         private readonly IClient _client;
+
         public OrderRepository(IClient client)
         {
-            this._client = client;
-            this._client.SetBaseAddress(Environment.GetEnvironmentVariable("ORDER_SERVICE"));
+            _client = client;
+            _client.SetBaseAddress(Environment.GetEnvironmentVariable("ORDER_SERVICE"));
         }
-        public async Task<Order> getOrder(string orderId)
+
+        public async Task<Order> GetOrder(string orderId)
         {
-            string endPoint = "order/" + orderId;
+            var endPoint = "order/" + orderId;
             return await _client.GetAsync<Order>(endPoint);
         }
 
-        public async Task<Order> createOrder(Order order)
+        public async Task<Order> CreateOrder(Order order)
         {
             //string endPoint = "order/"+
-            string endPoint = "order";
+            var endPoint = "order";
             return await _client.PostAsync<Order>(endPoint, order);
         }
     }

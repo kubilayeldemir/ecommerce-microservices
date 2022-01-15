@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Clients.Models.Order
+﻿namespace Clients.Models.Order
 {
     public class User
     {
-        public String name { get; set; }
-        public String email { get; set; }
-        public String address { get; set; }
-        public String phoneNumber { get; set; }
+        public string name { get; set; }
+        public string email { get; set; }
+        public string address { get; set; }
+        public string phoneNumber { get; set; }
     }
 }

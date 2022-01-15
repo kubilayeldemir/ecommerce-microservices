@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Clients.Interfaces;
 using Clients.Models;
 
 namespace Clients.Repositories
 {
-    public class ProductRepository: IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly IClient _client;
+
         public ProductRepository(IClient client)
         {
-            this._client = client;
-            this._client.SetBaseAddress(Environment.GetEnvironmentVariable("PRODUCT_SERVICE"));
+            _client = client;
+            _client.SetBaseAddress(Environment.GetEnvironmentVariable("PRODUCT_SERVICE"));
         }
+
         public async Task<Product> GetProductById(string productId)
         {
-            string endpoint = "products/" + productId;
+            var endpoint = "products/" + productId;
             return await _client.GetAsync<Product>(endpoint);
         }
-        public async Task<PagedProducts> GetProductsPaged(string brand,int page, int size)
+
+        public async Task<PagedProducts> GetProductsPaged(string brand, int page, int size)
         {
             size = size < 1 ? 3 : size;
-            string endpoint = "products?";
-            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            var endpoint = "products?";
+            var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
             queryString.Add("brand", brand);
             queryString.Add("page", page.ToString());
             queryString.Add("size", size.ToString());
@@ -32,13 +34,15 @@ namespace Clients.Repositories
 
             return await _client.GetAsync<PagedProducts>(endpoint);
         }
-        public async Task<List<Product>> GetProductsByIdList(List<String> productIds)
+
+        public async Task<List<Product>> GetProductsByIdList(List<string> productIds)
         {
-            string endpoint = "/api/products/list/";
-            foreach(var id in productIds)
+            var endpoint = "/api/products/list/";
+            foreach (var id in productIds)
             {
                 endpoint += id + ',';
             }
+
             return await _client.GetAsync<List<Product>>(endpoint);
         }
     }
