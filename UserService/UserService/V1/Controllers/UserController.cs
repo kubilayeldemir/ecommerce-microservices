@@ -26,13 +26,13 @@ namespace UserService.V1.Controllers
                 return Unauthorized();
             }
             var jwtToken = await _userService.GenerateJwtTokenForUser(user);
-            return Ok(new JwtResponseModel(jwtToken));
+            return Ok(new JwtResponseModel(user, jwtToken));
         }
         
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserLoginRequestModel model)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegisterRequestModel model)
         {
-            var user = await _userService.RegisterUser(model.Email, model.Password);
+            var user = await _userService.RegisterUser(model);
             if (user == null)
             {
                 return BadRequest(new

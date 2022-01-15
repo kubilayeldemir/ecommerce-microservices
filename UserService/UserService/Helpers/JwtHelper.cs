@@ -12,7 +12,7 @@ namespace UserService.Helpers
         public static string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Startup.JwtPasswordChangeLater);
+            var key = Encoding.ASCII.GetBytes(Startup.JwtSecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(

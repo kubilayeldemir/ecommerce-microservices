@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using UserService.Helpers;
 using UserService.Models;
 using UserService.Repositories;
+using UserService.V1.Models.RequestModels;
 
 namespace UserService.Services
 {
@@ -30,16 +31,18 @@ namespace UserService.Services
             return JwtHelper.GenerateJwtToken(user);
         }
 
-        public async Task<User> RegisterUser(string email, string password)
+        public async Task<User> RegisterUser(UserRegisterRequestModel userRegisterModel)
         {
-            var hashedModel = EncryptionHelper.EncryptData(password);
+            var (hashedData, salt) = EncryptionHelper.EncryptData(userRegisterModel.Password);
             var user = new User
             {
                 Id = Guid.NewGuid(),
-                Email = email,
-                Password = hashedModel.HashedData,
-                Salt = hashedModel.Salt,
+                Email = userRegisterModel.Email,
+                Password = hashedData,
+                Salt = salt,
                 Role = "user",
+                Name = userRegisterModel.Name,
+                LastName = userRegisterModel.LastName,
                 CreatedAt = DateTime.UtcNow
             };
             try

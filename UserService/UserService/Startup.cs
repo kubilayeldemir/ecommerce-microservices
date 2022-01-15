@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +13,7 @@ namespace UserService
     public class Startup
     {
         //TODO needs to be an env variable or something secure
-        public static string JwtPasswordChangeLater = "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" +
-                                                      "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd";
+        public static readonly string JwtSecretKey = Environment.GetEnvironmentVariable("ECOMMERCE_JWT_SECRET");
 
         public Startup(IConfiguration configuration)
         {
