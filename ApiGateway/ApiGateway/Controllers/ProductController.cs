@@ -1,5 +1,4 @@
 ﻿using Clients.Interfaces;
-using Clients.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,19 +17,21 @@ namespace ApiGateway.Controllers
 
         [HttpGet]
         [Route("{productId}")]
-        public async Task<Product> GetProductById(string productId)
+        public async Task<IActionResult> GetProductById(string productId)
         {
-            return await _productRepository.GetProductById(productId);
+            var product = await _productRepository.GetProductById(productId);
+            return Ok(product);
         }
 
         [HttpGet]
         [Route("paged")]
-        public async Task<PagedProducts> GetProductsPaged(
+        public async Task<IActionResult> GetProductsPaged(
             [FromQuery] string brand,
             [FromQuery] int page,
             [FromQuery] int size)
         {
-            return await _productRepository.GetProductsPaged(brand, page, size);
+            var pagedProducts = await _productRepository.GetProductsPaged(brand, page, size);
+            return Ok(pagedProducts);
         }
     }
 }

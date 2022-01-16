@@ -18,8 +18,7 @@ namespace Clients.Repositories
         public async Task<UserLoginResponseModel> LoginUser(UserLoginRequestModel loginRequestModel)
         {
             var endPoint = "api/v1/User/login";
-            var x = await _client.PostAsync<UserLoginResponseModel>(endPoint, loginRequestModel);
-            return x;
+            return await _client.PostAsync<UserLoginResponseModel>(endPoint, loginRequestModel);
         }
         
         public async Task<UserResponseModel> RegisterUser(UserRegisterRequestModel loginRequestModel)
