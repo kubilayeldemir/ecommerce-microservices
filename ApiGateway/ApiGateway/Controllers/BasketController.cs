@@ -21,16 +21,16 @@ namespace ApiGateway.Controllers
 
         [HttpGet]
         [Route("{basketId}")]
-        public async Task<BasketPostResponse> GetBasketById(string basketId)
+        public async Task<IActionResult> GetBasketById(string basketId)
         {
             var basketResponse = new BasketPostResponse();
             basketResponse.products = await _basketRepository.GetBasket(basketId);
             basketResponse.basketId = basketId;
-            return basketResponse;
+            return Ok(basketResponse);
         }
 
         [HttpPost]
-        public async Task<BasketPostResponse> CreateBasketOrAddToBasket([FromBody] BasketPostRequest req)
+        public async Task<IActionResult> CreateBasketOrAddToBasket([FromBody] BasketPostRequest req)
         {
             var realProducts = await _productRepository.GetProductsByIdList(req.products);
             var basketResponse = new BasketPostResponse();
@@ -48,8 +48,7 @@ namespace ApiGateway.Controllers
                 basketResponse.basketId = req.basketId;
                 basketResponse.products = newBasket;
             }
-
-            return basketResponse;
+            return Accepted(basketResponse);
         }
     }
 }
